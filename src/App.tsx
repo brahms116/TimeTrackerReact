@@ -1,25 +1,70 @@
-import React from 'react';
-import logo from './logo.svg';
+import React,{useRef} from 'react';
 import './App.css';
+import AppScreen from './components/base/AppScreen'
+import styled from 'styled-components'
+import {BrowserRouter as Router, Route, Switch, useLocation} from 'react-router-dom'
+import Entries from './components/pages/Entries'
+import Login from './components/pages/Login'
+import Logs from './components/pages/Logs'
+import Timer from './components/pages/Timer'
+import SignUp from './components/pages/SignUp'
+import PrivateRoute from './components/base/PrivateRoute'
+import AuthContextProvider from './Contexts/AuthContext'
+import LoginSettings from './components/pages/LoginSettings'
+import SplashLogo from './components/pages/SplashLogo'
+import VerifyEmail from './components/pages/VerifyEmail'
 
-function App() {
+
+
+
+
+const StyledApp = styled.div`
+  display:flex;
+  justify-content:center;
+  height:100vh;
+  padding-top:2rem;
+  position:relative;
+  @media(max-width:1400px){
+    padding:0;
+    
+  }
+`
+function App() { 
+
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StyledApp>
+      <AuthContextProvider>
+      <AppScreen>
+        <Switch >
+          <PrivateRoute exact path='/logs'>
+            <Logs/>
+          </PrivateRoute>
+          <PrivateRoute exact path='/entries/:id'>
+            <Entries/>
+          </PrivateRoute>
+          <PrivateRoute exact path='/timer/:id'>
+            <Timer/>
+          </PrivateRoute>
+          <PrivateRoute exact path='/loginsetting'>
+            <LoginSettings/>
+          </PrivateRoute>
+          <Route exact path='/verify'>
+            <VerifyEmail/>
+          </Route>
+          <Route exact path='/login'>
+            <Login></Login>
+          </Route>
+          <Route exact path='/signup'>
+            <SignUp/>
+          </Route>
+          <Route exact path='/'>
+            <SplashLogo/>
+          </Route>
+        </Switch>
+      </AppScreen>
+      </AuthContextProvider>       
+    </StyledApp>
   );
 }
 
