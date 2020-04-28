@@ -168,6 +168,7 @@ const SignUp = (props:SignUpProps)=>{
                 try {
                     await user.sendEmailVerification()
                     await firebase.auth().signOut()
+                    setLoading(false)
                     history.push('/verify')
                 } catch (err) {
                     console.log(err)
@@ -175,18 +176,23 @@ const SignUp = (props:SignUpProps)=>{
             }else{
                 if(!authC.state.isAuth){
                     authC.dispatch({type:"LOGIN",uid:user.uid,db:firebase.firestore()})
+                    setLoading(false)
                     history.push("/logs")
                 }
 
             }
 
+        }else{
+
+            setLoading(false)
+
         }
-        setLoading(false)
     }
 
     //check firebase login status
     useEffect(()=>{
-        firebase.auth().onAuthStateChanged(handleAuthChange)
+        const listener = firebase.auth().onAuthStateChanged(handleAuthChange)
+        return ()=>listener()
     },[])
 
 

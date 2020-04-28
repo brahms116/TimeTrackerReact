@@ -40,7 +40,7 @@ const Timer  =()=>{
 
     const history = useHistory()
     const {id} = useParams()
-    const [startTime,setStart] = useState<moment.Moment|undefined>(undefined)
+    const [startTime,setStart] = useState(moment())
     const [seconds,setSeconds] = useState(0)
     const authC = useContext(AuthContext)
     const db = authC.state.db!
@@ -52,14 +52,14 @@ const Timer  =()=>{
     
 
     useEffect(()=>{
-        setStart(moment)
         const interval = setInterval(updateTime,1000)
         return ()=>clearInterval(interval)
     },[])
     
 
     const updateTime = ()=>{
-        setSeconds(moment.duration(moment().diff(startTime)).asSeconds())
+        
+        setSeconds(Math.floor(moment.duration(moment().diff(startTime)).asSeconds()))
     }
    
     const handleSubmit = async()=>{

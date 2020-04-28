@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {color} from '../Styles'
 import moment from 'moment'
@@ -32,9 +32,24 @@ interface CurrentTimeProps {
   className?:string;
 }
 const CurrentTime = (props:CurrentTimeProps)=>{
+
+
+  const [dummyValue,setDummy] = useState(false)
+
+  useEffect(()=>{
+    const interval = setInterval(dummyFunction,1000)
+    return ()=>clearInterval(interval)
+  },[])
+
+  const dummyFunction = ()=>{
+    setDummy(dummyValue=>!dummyValue)
+    //console.log('running')
+  }
+
+
   return(
     <StyledCurrentTime className={props.className}>
-        <Time>{moment().format('hh:mm')}</Time>
+        <Time>{moment().format('hh:mm ')}</Time>
         <AMPM>{moment().format('a')}</AMPM>
         <Month>{moment().format('Mo MMMM')}</Month>
     </StyledCurrentTime>

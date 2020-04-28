@@ -127,7 +127,8 @@ const Login = ()=>{
 
     //check firebase login status
     useEffect(()=>{
-        firebase.auth().onAuthStateChanged(handleAuthChange)
+        const listener = firebase.auth().onAuthStateChanged(handleAuthChange)
+        return()=>listener()
     },[])
     return(
         <StyledLogin>
