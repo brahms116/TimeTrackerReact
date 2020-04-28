@@ -10,6 +10,7 @@ import {AuthContext} from '../../Contexts/AuthContext'
 import {useHistory} from 'react-router-dom'
 import {color} from '../Styles'
 
+
 const StyledLogs = styled.div`
     min-width:100%;
     min-height:100%;
@@ -80,7 +81,7 @@ const Logs  =()=>{
             {isMenu && <LogEdit togglefunction={closeMenu}/>}
             <Hero>
                 <NavHeader main>
-                    <WelcomeText>Hello, David</WelcomeText>
+                    <WelcomeText>TIMETRACKER</WelcomeText>
                     <div onClick={handleLoggoutClick}>Logout</div>
                 </NavHeader>
                 <CurrentTime/>

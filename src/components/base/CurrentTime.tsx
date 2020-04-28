@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import {color} from '../Styles'
+import moment from 'moment'
 
 const StyledCurrentTime = styled.div`
     font-weight:300;
@@ -33,9 +34,9 @@ interface CurrentTimeProps {
 const CurrentTime = (props:CurrentTimeProps)=>{
   return(
     <StyledCurrentTime className={props.className}>
-        <Time>12:35</Time>
-        <AMPM>am</AMPM>
-        <Month>September </Month>
+        <Time>{moment().format('hh:mm')}</Time>
+        <AMPM>{moment().format('a')}</AMPM>
+        <Month>{moment().format('Mo MMMM')}</Month>
     </StyledCurrentTime>
   )
 }

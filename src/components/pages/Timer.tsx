@@ -7,6 +7,7 @@ import moment from "moment"
 import { AuthContext } from '../../Contexts/AuthContext'
 import {color} from '../Styles'
 import {formatSeconds} from '../TimeUtils'
+import useCheckAuth from '../useCheckAuth'
 
 
 
@@ -33,6 +34,10 @@ const Time = styled.div`
 
 
 const Timer  =()=>{
+
+    useCheckAuth()
+
+
     const history = useHistory()
     const {id} = useParams()
     const [startTime,setStart] = useState<moment.Moment|undefined>(undefined)
@@ -54,7 +59,7 @@ const Timer  =()=>{
     
 
     const updateTime = ()=>{
-        setSeconds(seconds=>seconds+1)
+        setSeconds(moment.duration(moment().diff(startTime)).asSeconds())
     }
    
     const handleSubmit = async()=>{

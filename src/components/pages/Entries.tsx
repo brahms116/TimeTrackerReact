@@ -11,7 +11,7 @@ import LogEdit from '../page-components/LogEdit'
 import {color} from '../Styles'
 import {formatSeconds} from '../TimeUtils'
 import moment from 'moment'
-
+import useCheckAuth from '../useCheckAuth'
 
 
 const StyledEntries = styled.div`
@@ -37,6 +37,9 @@ const Loading = styled.div`
 `
 
 const Entries  =()=>{
+
+    useCheckAuth()
+
     let {id} = useParams()
     const history = useHistory()
     const authC = useContext(AuthContext)

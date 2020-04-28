@@ -53,26 +53,23 @@ const Title = styled.div`
     margin-bottom:2.1rem;
 `
 
+const Loading = styled.div`
+    display:flex;
+    height:100%;
+    align-items:center;
+    color:${color.bg};
+    font-size:2rem;
+    justify-content:center;
+`
+
 interface SignUpProps {
   className?:string;
-  //parent:React.RefObject<HTMLDivElement>
 }
 
 const SignUp = (props:SignUpProps)=>{
 
 
-    //animation
-    // const [aprops,set]= useSpring(()=>({
-    //     from:{
-    //         opacity:0
-    //     },
-    //     to:{
-    //         opacity:1
-    //     },
-    //     config:{
-    //         duration:600
-    //     }
-    // }))
+   
 
     
     
@@ -80,6 +77,8 @@ const SignUp = (props:SignUpProps)=>{
     const authC = useContext(AuthContext)
 
     //states
+    const [isLoading, setLoading] = useState(true)
+
     const [formEmail,setEmail] = useState('')
     const [emailErr,setEmailErr] = useState('')
     
@@ -158,33 +157,31 @@ const SignUp = (props:SignUpProps)=>{
                 }
             }
         }    
-
+        
     }
 
 
     const handleAuthChange = async(user:firebase.User|null)=>{
         //console.log(user)
-            if(user){
-               if(!user.emailVerified){
-                   try {
-                       await user.sendEmailVerification()
-                       await firebase.auth().signOut()
-                       history.push('/verify')
-                   } catch (err) {
-                       console.log(err)
-                   }
-               }else{
-                   if(!authC.state.isAuth){
-                       authC.dispatch({type:"LOGIN",uid:user.uid,db:firebase.firestore()})
-                       history.push("/logs")
-                   }
-    
-               }
-    
+        if(user){
+            if(!user.emailVerified){
+                try {
+                    await user.sendEmailVerification()
+                    await firebase.auth().signOut()
+                    history.push('/verify')
+                } catch (err) {
+                    console.log(err)
+                }
+            }else{
+                if(!authC.state.isAuth){
+                    authC.dispatch({type:"LOGIN",uid:user.uid,db:firebase.firestore()})
+                    history.push("/logs")
+                }
+
             }
-            else{
-    
-            }
+
+        }
+        setLoading(false)
     }
 
     //check firebase login status
@@ -193,9 +190,8 @@ const SignUp = (props:SignUpProps)=>{
     },[])
 
 
-  return(
-    <StyledSignUp className={props.className}>
-                          
+    if (!isLoading) return(
+    <StyledSignUp className={props.className}>                          
         <InputArea>
             <Title >Sign Up</Title>  
             <PosTextInput errorMsg={emailErr} text='email' handleChange={emailChange}/>
@@ -205,6 +201,11 @@ const SignUp = (props:SignUpProps)=>{
         <Linkline>Already have an Account? <Underline><Link to="/login">Click here to log in</Link></Underline></Linkline>
         <BottomButton clickfunction={handleClick} text="GO" variant="Login"/>
     </StyledSignUp>
+  )
+  else return(
+      <Loading>
+          Loading...
+      </Loading>
   )
 }
 

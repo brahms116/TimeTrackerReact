@@ -8,7 +8,7 @@ const StyledBodyHeading = styled.div`
     align-items:flex-end;
     width:100%;
     margin-top:${46/16}rem;
-    margin-bottom:${49/16}rem;
+    margin-bottom:${32/16}rem;
 `
 
 const Title = styled.div`

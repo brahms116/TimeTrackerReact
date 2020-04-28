@@ -15,7 +15,7 @@ const StyledBodyItem = styled(animated.div)`
   align-items:center;
   color:${color.lightGrey};
   font-weight:300;
-  margin-bottom:${35/16}rem;
+  padding:${17/16}rem 0;
   cursor:pointer;
 `
 const Item =styled.div`
